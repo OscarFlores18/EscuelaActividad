@@ -1,1 +1,63 @@
-<p>administracion works!</p>
+<div class="administracion-container">
+
+  <div class="encabezado">
+
+    <div>
+      <h1>Gestión de Personal</h1>
+      <p>Listado del personal de la institución</p>
+    </div>
+
+    <button
+      type="button"
+      class="btn-nuevo"
+      (click)="abrirFormularioPersonal()">
+      + Nuevo personal
+    </button>
+
+  </div>
+
+  <div class="tabla-container">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Cargo</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for (persona of personal; track persona.id) {
+
+          <tr>
+            <td>{{ persona.id }}</td>
+            <td>{{ persona.nombre }}</td>
+            <td>{{ persona.apellido }}</td>
+            <td>{{ persona.email }}</td>
+            <td>{{ persona.cargo }}</td>
+          </tr>
+
+        }
+
+        @empty {
+
+          <tr>
+            <td colspan="5">
+              No hay personal registrado.
+            </td>
+          </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
