@@ -1,0 +1,72 @@
+<div class="cursos-container">
+
+  <div class="encabezado">
+
+    <div>
+      <h1>Gestión de Cursos</h1>
+      <p>Listado de cursos registrados</p>
+    </div>
+
+    <button
+      type="button"
+      class="btn-nuevo"
+      (click)="abrirFormularioCurso()">
+      + Nuevo curso
+    </button>
+
+  </div>
+
+  <div class="tabla-container">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Ciclo lectivo</th>
+          <th>División</th>
+          <th>Grado</th>
+          <th>Turno</th>
+          <th>Cupo máximo</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for (curso of cursos; track curso.id) {
+
+          <tr>
+
+            <td>{{ curso.id }}</td>
+
+            <td>{{ curso.ciclo_lectivo }}</td>
+
+            <td>{{ curso.division }}</td>
+
+            <td>{{ curso.grado }}</td>
+
+            <td>{{ curso.turno }}</td>
+
+            <td>{{ curso.cupo_maximo }}</td>
+
+          </tr>
+
+        }
+
+        @empty {
+
+          <tr>
+            <td colspan="6">
+              No hay cursos registrados.
+            </td>
+          </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

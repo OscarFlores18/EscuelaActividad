@@ -1,0 +1,60 @@
+@if (mostrarMenu()) {
+
+  <nav class="navbar">
+
+    <div class="logo">
+      🏫 Colegio
+    </div>
+
+    <div class="nav-links">
+
+      @if (authService.obtenerRol() === 'ADMIN' ||
+           authService.obtenerRol() === 'DOCENTE' ||
+           authService.obtenerRol() === 'SECRETARIA') {
+
+        <a routerLink="/alumnos">
+          Alumnos
+        </a>
+
+      }
+
+      @if (authService.obtenerRol() === 'ADMIN' ||
+           authService.obtenerRol() === 'DOCENTE') {
+
+        <a routerLink="/cursos">
+          Cursos
+        </a>
+
+      }
+
+      @if (authService.obtenerRol() === 'ADMIN') {
+
+        <a routerLink="/administracion">
+          Administración
+        </a>
+
+      }
+
+    </div>
+
+    <div class="user-info">
+
+      <span>
+        Usuario: {{ authService.obtenerUsuario() }}
+      </span>
+
+      <span>
+        Rol: {{ authService.obtenerRol() }}
+      </span>
+
+      <button (click)="cerrarSesion()">
+        Cerrar sesión
+      </button>
+
+    </div>
+
+  </nav>
+
+}
+
+<router-outlet></router-outlet>
