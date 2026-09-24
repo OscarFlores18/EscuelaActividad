@@ -28,6 +28,7 @@
           <th>Grado</th>
           <th>Turno</th>
           <th>Cupo máximo</th>
+          <th>Acciones</th>
         </tr>
       </thead>
 
@@ -48,6 +49,22 @@
             <td>{{ curso.turno }}</td>
 
             <td>{{ curso.cupo_maximo }}</td>
+
+            <td class="acciones">
+              <button
+                type="button"
+                class="btn-editar"
+                (click)="abrirFormularioEditar(curso)">
+                Editar
+              </button>
+
+              <button
+                type="button"
+                class="btn-eliminar"
+                (click)="confirmarEliminar(curso)">
+                Eliminar
+              </button>
+            </td>
 
           </tr>
 

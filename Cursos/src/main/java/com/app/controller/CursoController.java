@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.app.dto.CursoAltaDTO;
 import com.app.dto.CursoConDocenteDTO;
+import com.app.dto.CursoModificarDTO;
 import com.app.model.Curso;
 import com.app.service.CursoService;
 
@@ -46,5 +47,29 @@ public class CursoController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Curso> modificarCurso(
+            @PathVariable Long id,
+            @RequestBody CursoModificarDTO dto) {
 
+        return cursoService.modificarCurso(id, dto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarCurso(@PathVariable Long id) {
+        boolean eliminado = cursoService.eliminarCurso(id);
+
+        if (!eliminado) {
+            // Si no existe o tiene alumnos, no se elimina.
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("No se pudo eliminar: el curso no existe o tiene alumnos asociados.");
+        }
+
+        return ResponseEntity.noContent().build();
+    }
+   
+    
 }

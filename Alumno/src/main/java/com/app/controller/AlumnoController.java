@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import com.app.dto.AlumnoAltaDTO;
 import com.app.dto.AlumnoConCursoDTO;
+import com.app.dto.AlumnoModificarDTO;
 import com.app.model.Alumno;
 import com.app.service.AlumnoService;
 import org.springframework.http.HttpStatus;
@@ -44,4 +45,26 @@ public class AlumnoController {
     public ResponseEntity<AlumnoConCursoDTO> obtenerConCurso(@PathVariable Long id) {
         return ResponseEntity.ok(alumnoService.obtenerConCurso(id));
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Alumno> modificarAlumno(
+            @PathVariable Long id,
+            @RequestBody AlumnoModificarDTO dto) {
+
+        return alumnoService.modificarAlumno(id, dto)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarAlumno(
+            @PathVariable Long id) {
+
+        if (!alumnoService.eliminarAlumno(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.noContent().build();
+    }
+    
 }

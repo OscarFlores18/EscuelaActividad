@@ -171,6 +171,135 @@ export class Alumnos implements OnInit {
 
   }
 
+abrirFormularioEdicion(alumno: Alumno): void {
+  Swal.fire({
+    title: 'Editar alumno',
+    html: `
+      <input id="nombre"
+        class="swal2-input"
+        placeholder="Nombre"
+        value="${alumno.nombre}">
+
+      <input id="apellido"
+        class="swal2-input"
+        placeholder="Apellido"
+        value="${alumno.apellido}">
+
+      <input id="dni"
+        class="swal2-input"
+        placeholder="DNI"
+        value="${alumno.dni}">
+
+      <input id="email"
+        class="swal2-input"
+        type="email"
+        placeholder="Email"
+        value="${alumno.email}">
+    `,
+    showCancelButton: true,
+    confirmButtonText: 'Guardar cambios',
+    cancelButtonText: 'Cancelar',
+    focusConfirm: false,
+    preConfirm: () => {
+      const nombre =
+        (document.getElementById('nombre') as HTMLInputElement).value;
+      const apellido =
+        (document.getElementById('apellido') as HTMLInputElement).value;
+      const dni =
+        (document.getElementById('dni') as HTMLInputElement).value;
+      const email =
+        (document.getElementById('email') as HTMLInputElement).value;
+
+      if (!nombre || !apellido || !dni || !email) {
+        Swal.showValidationMessage(
+          'Completá todos los campos'
+        );
+        return false;
+      }
+
+      if (!/^[0-9]+$/.test(dni)) {
+        Swal.showValidationMessage(
+          'El DNI debe contener solamente números'
+        );
+        return false;
+      }
+
+      if (!email.includes('@')) {
+        Swal.showValidationMessage(
+          'Ingresá un email válido'
+        );
+        return false;
+      }
+
+      return { nombre, apellido, dni, email };
+    }
+  }).then(resultado => {
+    if (resultado.isConfirmed) {
+      this.modificarAlumno(
+        alumno.id,
+        resultado.value as Alumno
+      );
+    }
+  });
+}
+
+modificarAlumno(id: number, alumno: Alumno): void {
+  this.alumnoService.modificarAlumno(id, alumno)
+    .subscribe({
+      next: () => {
+        Swal.fire(
+          '¡Modificado!',
+          'Los datos del alumno fueron actualizados.',
+          'success'
+        );
+        this.cargarAlumnos();
+      },
+      error: error => {
+        console.error(error);
+        Swal.fire(
+          'Error',
+          'No se pudo modificar el alumno.',
+          'error'
+        );
+      }
+    });
+}
+confirmarEliminacion(alumno: Alumno): void {
+  Swal.fire({
+    title: '¿Eliminar alumno?',
+    text: `Se eliminará a ${alumno.nombre} ${alumno.apellido}.`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then(resultado => {
+    if (resultado.isConfirmed) {
+      this.eliminarAlumno(alumno.id);
+    }
+  });
+}
+
+eliminarAlumno(id: number): void {
+  this.alumnoService.eliminarAlumno(id)
+    .subscribe({
+      next: () => {
+        Swal.fire(
+          '¡Eliminado!',
+          'El alumno fue dado de baja.',
+          'success'
+        );
+        this.cargarAlumnos();
+      },
+      error: error => {
+        console.error(error);
+        Swal.fire(
+          'Error',
+          'No se pudo eliminar el alumno.',
+          'error'
+        );
+      }
+    });
+}
 
   crearAlumno(alumno: Alumno): void {
 

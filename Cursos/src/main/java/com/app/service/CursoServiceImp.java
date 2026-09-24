@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.app.client.DocenteClient;
 import com.app.dto.CursoConDocenteDTO;
+import com.app.dto.CursoModificarDTO;
 import com.app.dto.DocenteDTO;
 import com.app.model.Alumno;
 import com.app.model.Curso;
@@ -61,6 +63,44 @@ public class CursoServiceImp implements CursoService {
 		Alumno alumno = this.alumnoRepository.findById(idAlumno).get();
 		curso.removeAlumno(alumno);
 	}
+	
+	@Override
+	public Optional<Curso> modificarCurso(Long id, CursoModificarDTO dto) {
+	    return cursoRepository.findById(id).map(curso -> {
+	        curso.setCiclo_lectivo(dto.ciclo_lectivo());
+	        curso.setDivision(dto.division());
+	        curso.setGrado(dto.grado());
+	        curso.setTurno(dto.turno());
+	        curso.setCupo_maximo(dto.cupo_maximo());
+
+	        return cursoRepository.save(curso);
+	    });
+	}
+
+	@Override
+	@Transactional
+	public boolean eliminarCurso(Long id) {
+	    Optional<Curso> resultado = cursoRepository.findById(id);
+
+	    if (resultado.isEmpty()) {
+	        return false;
+	    }
+
+	    Curso curso = resultado.get();
+
+	    // No eliminar el curso si todavía tiene alumnos asociados.
+	    if (curso.getAlumnos() != null && !curso.getAlumnos().isEmpty()) {
+	        return false;
+	    }
+
+	    cursoRepository.delete(curso);
+	    return true;
+	}
+	
+	
+	
+	
+	
 
 
 }

@@ -2,53 +2,91 @@
 
   <nav class="navbar">
 
+    <!-- LOGO -->
     <div class="logo">
-      🏫 Colegio
+      <span class="logo-icon">🏫</span>
+      <span class="logo-text">Colegio</span>
     </div>
 
+
+    <!-- NAVEGACIÓN -->
     <div class="nav-links">
 
-      @if (authService.obtenerRol() === 'ADMIN' ||
-           authService.obtenerRol() === 'DOCENTE' ||
-           authService.obtenerRol() === 'SECRETARIA') {
+      @if (
+        authService.obtenerRol() === 'ADMIN' ||
+        authService.obtenerRol() === 'DOCENTE' ||
+        authService.obtenerRol() === 'SECRETARIA'
+      ) {
 
-        <a routerLink="/alumnos">
-          Alumnos
+        <a
+          routerLink="/alumnos"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+
+          <span class="nav-icon">👨‍🎓</span>
+          <span>Alumnos</span>
+
         </a>
 
       }
 
-      @if (authService.obtenerRol() === 'ADMIN' ||
-           authService.obtenerRol() === 'DOCENTE') {
 
-        <a routerLink="/cursos">
-          Cursos
+      @if (
+        authService.obtenerRol() === 'ADMIN' ||
+        authService.obtenerRol() === 'DOCENTE'
+      ) {
+
+        <a
+          routerLink="/cursos"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+
+          <span class="nav-icon">📚</span>
+          <span>Cursos</span>
+
         </a>
 
       }
+
 
       @if (authService.obtenerRol() === 'ADMIN') {
 
-        <a routerLink="/administracion">
-          Administración
+        <a
+          routerLink="/administracion"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+
+          <span class="nav-icon">⚙️</span>
+          <span>Administración</span>
+
         </a>
 
       }
 
     </div>
 
+
+    <!-- USUARIO -->
     <div class="user-info">
 
-      <span>
-        Usuario: {{ authService.obtenerUsuario() }}
-      </span>
+      <div class="user-data">
 
-      <span>
-        Rol: {{ authService.obtenerRol() }}
-      </span>
+        <span class="user-name">
+          {{ authService.obtenerUsuario() }}
+        </span>
 
-      <button (click)="cerrarSesion()">
+        <span class="rol">
+          {{ authService.obtenerRol() }}
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        (click)="cerrarSesion()">
+
         Cerrar sesión
+
       </button>
 
     </div>

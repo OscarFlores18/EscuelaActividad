@@ -19,4 +19,12 @@ export class CursoService {
   crearCurso(curso: Curso): Observable<Curso> {
     return this.http.post<Curso>(this.apiUrl, curso);
   }
+  modificarCurso(id: number, curso: Curso): Observable<Curso> {
+    return this.http.put<Curso>(`${this.apiUrl}/${id}`, curso);
+  }
+
+  eliminarCurso(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }

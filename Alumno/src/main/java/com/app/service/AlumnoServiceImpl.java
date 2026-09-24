@@ -1,11 +1,13 @@
 package com.app.service;
 
 import com.app.dto.AlumnoConCursoDTO;
+import com.app.dto.AlumnoModificarDTO;
 import com.app.model.Alumno;
 import com.app.repository.AlumnoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlumnoServiceImpl implements AlumnoService {
@@ -40,4 +42,33 @@ public class AlumnoServiceImpl implements AlumnoService {
 
         return dto;
     }
+    
+    
+    @Override
+    public Optional<Alumno> modificarAlumno(
+            Long id,
+            AlumnoModificarDTO dto) {
+
+        return alumnoRepository.findById(id)
+            .map(alumno -> {
+                alumno.setNombre(dto.nombre());
+                alumno.setApellido(dto.apellido());
+                alumno.setDni(dto.dni());
+                alumno.setEmail(dto.email());
+
+                return alumnoRepository.save(alumno);
+            });
+    }
+
+    @Override
+    public boolean eliminarAlumno(Long id) {
+
+        if (!alumnoRepository.existsById(id)) {
+            return false;
+        }
+
+        alumnoRepository.deleteById(id);
+        return true;
+    }
+    
 }
