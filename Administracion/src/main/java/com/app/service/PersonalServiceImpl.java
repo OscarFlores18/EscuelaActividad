@@ -2,9 +2,8 @@ package com.app.service;
 
 import java.util.List;
 import java.util.Optional;
-
+import com.app.dto.PersonalModificarDTO;
 import org.springframework.stereotype.Service;
-
 import com.app.model.Personal;
 import com.app.repository.PersonalRepository;
 
@@ -33,5 +32,31 @@ public class PersonalServiceImpl implements PersonalService {
         return personalRepository.findById(id);
 	
 	}
+	
+	@Override
+	public Optional<Personal> modificarPersonal(Long id, PersonalModificarDTO dto) {
+	    return personalRepository.findById(id).map(personal -> {
+	        personal.setNombre(dto.nombre());
+	        personal.setApellido(dto.apellido());
+	        personal.setEmail(dto.email());
+	        personal.setCargo(dto.cargo());
+
+	        return personalRepository.save(personal);
+	    });
+	}
+
+	@Override
+	public boolean eliminarPersonal(Long id) {
+	    if (!personalRepository.existsById(id)) {
+	        return false;
+	    }
+
+	    personalRepository.deleteById(id);
+	    return true;
+	}
+	
+	
+	
+	
 
 }

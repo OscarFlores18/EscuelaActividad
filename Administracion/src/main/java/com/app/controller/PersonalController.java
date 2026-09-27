@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.app.dto.PersonalModificarDTO;
 import com.app.dto.PersonalAltaDTO;
 import com.app.model.Curso;
 import com.app.model.Personal;
@@ -56,17 +56,24 @@ public class PersonalController {
 	    }
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@PutMapping("/{id}")
+	public ResponseEntity<Personal> modificarPersonal(
+	        @PathVariable Long id,
+	        @RequestBody PersonalModificarDTO dto) {
+
+	    return personalService.modificarPersonal(id, dto)
+	            .map(ResponseEntity::ok)
+	            .orElse(ResponseEntity.notFound().build());
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> eliminarPersonal(@PathVariable Long id) {
+	    if (!personalService.eliminarPersonal(id)) {
+	        return ResponseEntity.notFound().build();
+	    }
+
+	    return ResponseEntity.noContent().build();
+	}
 	
 	
 	

@@ -222,3 +222,31 @@ tbody tr td[colspan] {
     width: 100%;
   }
 }
+.acciones {
+  white-space: nowrap;
+}
+
+.acciones button {
+  padding: 8px 12px;
+  margin-right: 6px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-editar {
+  background: #2563eb;
+}
+
+.btn-editar:hover {
+  background: #1d4ed8;
+}
+
+.btn-eliminar {
+  background: #dc2626;
+}
+
+.btn-eliminar:hover {
+  background: #b91c1c;
+}

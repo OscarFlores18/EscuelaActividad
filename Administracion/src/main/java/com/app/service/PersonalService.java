@@ -3,6 +3,7 @@ package com.app.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.app.dto.PersonalModificarDTO;
 import com.app.model.Curso;
 import com.app.model.Personal;
 
@@ -13,4 +14,7 @@ public interface PersonalService {
 
     List<Personal> listarPersonal();
 
+    Optional<Personal> modificarPersonal(Long id, PersonalModificarDTO dto);
+    boolean eliminarPersonal(Long id);
+    
 }

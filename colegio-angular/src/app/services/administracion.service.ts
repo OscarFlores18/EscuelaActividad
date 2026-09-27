@@ -20,20 +20,12 @@ export class AdministracionService {
     return this.http.post<Personal>(this.apiUrl, personal);
   }
 
-  modificarPersonal(
-    id: number,
-    personal: Personal
-  ): Observable<Personal> {
-    return this.http.put<Personal>(
-      `${this.apiUrl}/${id}`,
-      personal
-    );
+  modificarPersonal(id: number, personal: Personal): Observable<Personal> {
+    return this.http.put<Personal>(`${this.apiUrl}/${id}`, personal);
   }
 
   eliminarPersonal(id: number): Observable<void> {
-    return this.http.delete<void>(
-      `${this.apiUrl}/${id}`
-    );
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
 }

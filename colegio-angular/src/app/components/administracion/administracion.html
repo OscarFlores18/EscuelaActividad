@@ -27,6 +27,7 @@
           <th>Apellido</th>
           <th>Email</th>
           <th>Cargo</th>
+          <th>Acciones</th>
         </tr>
       </thead>
 
@@ -40,6 +41,21 @@
             <td>{{ persona.apellido }}</td>
             <td>{{ persona.email }}</td>
             <td>{{ persona.cargo }}</td>
+            <td class="acciones">
+              <button
+                type="button"
+                class="btn-editar"
+                (click)="abrirFormularioEditar(persona)">
+                Editar
+              </button>
+
+              <button
+                type="button"
+                class="btn-eliminar"
+                (click)="confirmarEliminar(persona)">
+                Eliminar
+              </button>
+            </td>
           </tr>
 
         }
