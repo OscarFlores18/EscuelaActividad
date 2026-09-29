@@ -66,6 +66,19 @@ services:
     networks:
       - escuela-network
 
+  colegio-angular:
+    build:
+      context: ./colegio-angular
+      dockerfile: Dockerfile
+    container_name: colegio-angular
+    ports:
+      - "4200:4000"
+    depends_on:
+      - gateway
+    networks:
+      - escuela-network
+
+
   alumno:
     build:
       context: ./Alumno
