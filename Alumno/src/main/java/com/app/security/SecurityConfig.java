@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class SecurityConfig {
 
     @Value("${spring.security.oauth2.resourceserver.jwt.secret-key}")
     private String secretKey;
+
+    @Value("${gateway.secret}")
+    private String gatewaySecret;
 
     @Bean
     public JwtDecoder jwtDecoder() {
@@ -57,6 +61,11 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
+
+            .addFilterBefore(
+                    new GatewaySecretFilter(gatewaySecret),
+                    SecurityContextHolderFilter.class
+            )
 
             .authorizeHttpRequests(auth -> auth
 

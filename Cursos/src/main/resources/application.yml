@@ -11,6 +11,11 @@ spring:
       on-profile: dev
     import: "configserver:http://localhost:8888"
 
+springdoc:
+  swagger-ui:
+    config-url: /curso/v3/api-docs/swagger-config
+    url: /curso/v3/api-docs
+
 ---
 spring:
   config:
