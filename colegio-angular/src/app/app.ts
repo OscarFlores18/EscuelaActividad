@@ -17,6 +17,7 @@ import { AuthService } from './services/auth.service';
     RouterLinkActive
   ],
   selector: 'app-root',
+  standalone: true,
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
